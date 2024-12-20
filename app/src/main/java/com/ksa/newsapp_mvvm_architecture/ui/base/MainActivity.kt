@@ -1,10 +1,11 @@
-package com.ksa.newsapp_mvvm_architecture
+package com.ksa.newsapp_mvvm_architecture.ui.base
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.ksa.newsapp_mvvm_architecture.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
