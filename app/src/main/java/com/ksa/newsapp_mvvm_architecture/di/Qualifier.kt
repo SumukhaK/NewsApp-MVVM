@@ -12,6 +12,10 @@ annotation class ActivityContext
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
+annotation class BaseURL
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
 annotation class DatabaseName
 
 @Qualifier
