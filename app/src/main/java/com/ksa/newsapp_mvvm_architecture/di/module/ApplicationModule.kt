@@ -1,6 +1,7 @@
 package com.ksa.newsapp_mvvm_architecture.di.module
 
 import android.app.Application
+import android.content.Context
 import com.ksa.newsapp_mvvm_architecture.NewsApplication
 import com.ksa.newsapp_mvvm_architecture.data.api.NetworkService
 import com.ksa.newsapp_mvvm_architecture.di.ApplicationContext
@@ -16,9 +17,12 @@ import javax.inject.Singleton
 
 @Module
 class ApplicationModule(private val application: NewsApplication) {
+
     @ApplicationContext
     @Provides
-    fun provideApplication(): Application = application
+    fun provideContext(): Context {
+        return application
+    }
 
     @BaseURL
     @Provides
