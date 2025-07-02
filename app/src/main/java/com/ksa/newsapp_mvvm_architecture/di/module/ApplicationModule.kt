@@ -42,6 +42,7 @@ class ApplicationModule(private val application: NewsApplication) {
         val builder = httpClient.newBuilder()
         builder.connectTimeout(20, TimeUnit.SECONDS)
         builder.readTimeout(20, TimeUnit.SECONDS)
+        builder.addInterceptor(interceptor)
         return builder.build()
     }
 

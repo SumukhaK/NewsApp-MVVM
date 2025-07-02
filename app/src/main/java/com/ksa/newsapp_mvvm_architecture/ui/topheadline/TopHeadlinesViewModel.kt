@@ -1,5 +1,6 @@
 package com.ksa.newsapp_mvvm_architecture.ui.topheadline
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ksa.newsapp_mvvm_architecture.data.model.Article

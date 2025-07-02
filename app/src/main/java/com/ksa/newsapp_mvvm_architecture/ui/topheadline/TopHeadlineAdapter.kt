@@ -1,6 +1,7 @@
 package com.ksa.newsapp_mvvm_architecture.ui.topheadline
 
 import android.net.Uri
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.recyclerview.widget.RecyclerView
@@ -29,16 +30,20 @@ class TopHeadlineAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
-        TODO("Not yet implemented")
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = DataViewHolder(
+        TopHeadlineItemLayoutBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+    )
 
-    override fun getItemCount(): Int {
-        TODO("Not yet implemented")
-    }
+    override fun getItemCount(): Int = articleList.size
 
-    override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
-        TODO("Not yet implemented")
-    }
+    override fun onBindViewHolder(holder: DataViewHolder, position: Int) =
+        holder.bind(articleList[position])
 
+    fun addData(list: List<Article>) {
+        articleList.addAll(list)
+    }
 }
