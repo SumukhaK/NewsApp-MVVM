@@ -7,6 +7,7 @@ import com.ksa.newsapp_mvvm_architecture.data.model.Article
 import com.ksa.newsapp_mvvm_architecture.data.repository.TopHeadlinesRepository
 import com.ksa.newsapp_mvvm_architecture.ui.base.UiState
 import com.ksa.newsapp_mvvm_architecture.utils.AppConstants.COUNTRY
+import com.ksa.newsapp_mvvm_architecture.utils.AppConstants.COUNTRY_BUNDLE_KEY
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -18,12 +19,16 @@ class TopHeadlinesViewModel(private val topHeadlinesRepository: TopHeadlinesRepo
     val uiState: StateFlow<UiState<List<Article>>> = _uiState
 
     init {
-        fetchNews()
+        fetchNews("")
     }
 
-    private fun fetchNews(){
+    fun fetchNews(country: String){
+       var countryParam :String = "us"
+        if(country.isNotBlank()){
+            countryParam = country
+        }
         viewModelScope.launch{
-            topHeadlinesRepository.getTopHeadlines(COUNTRY)
+            topHeadlinesRepository.getTopHeadlines(country = countryParam)
                 .catch { e ->
                     _uiState.value = UiState.Error(e.toString())
                 }.collect{
