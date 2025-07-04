@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.isDigitsOnly
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ksa.newsapp_mvvm_architecture.NewsApplication
 import com.ksa.newsapp_mvvm_architecture.data.model.Article
 import com.ksa.newsapp_mvvm_architecture.databinding.ActivityTopHeadlinesBinding
+import com.ksa.newsapp_mvvm_architecture.databinding.DisplayErrorMessageBinding
 import com.ksa.newsapp_mvvm_architecture.di.component.DaggerActivityComponent
 import com.ksa.newsapp_mvvm_architecture.di.module.ActivityModule
 import com.ksa.newsapp_mvvm_architecture.ui.base.UiState
@@ -33,11 +35,15 @@ class TopHeadlinesActivity : AppCompatActivity() {
     lateinit var adapter: TopHeadlineAdapter
 
     private lateinit var binding: ActivityTopHeadlinesBinding
+    private lateinit var errorView: View
+    private lateinit var retryBtn: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         injectDependencies()
         super.onCreate(savedInstanceState)
         binding = ActivityTopHeadlinesBinding.inflate(layoutInflater)
+        errorView = binding.errorLayout.errorConstraintlayout
+        retryBtn = binding.errorLayout.retryButton
         setContentView(binding.root)
         getExtrasFromIntent()
         setupUI()
@@ -74,6 +80,17 @@ class TopHeadlinesActivity : AppCompatActivity() {
             )
         )
         recyclerView.adapter = adapter
+
+        retryBtn.setOnClickListener {
+            retryFetchingNews()
+        }
+    }
+
+    private fun retryFetchingNews() {
+        binding.progressBar.visibility = View.VISIBLE
+        binding.recyclerView.visibility = View.GONE
+        errorView.visibility = View.GONE
+        newsListViewModel.fetchNews("us")
     }
 
     private fun setupObserver() {
@@ -93,6 +110,8 @@ class TopHeadlinesActivity : AppCompatActivity() {
                         is UiState.Error -> {
                             //Handle Error
                             binding.progressBar.visibility = View.GONE
+                            binding.recyclerView.visibility = View.GONE
+                            errorView.visibility = View.VISIBLE
                             Toast.makeText(this@TopHeadlinesActivity, it.message, Toast.LENGTH_LONG)
                                 .show()
                         }
