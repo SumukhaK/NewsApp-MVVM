@@ -7,6 +7,10 @@
     android:layout_height="match_parent"
     tools:context=".ui.topheadline.TopHeadlinesActivity">
 
+    <include
+        layout="@layout/display_error_message"
+        android:id="@+id/error_layout"
+        android:visibility="gone"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
