@@ -5,5 +5,9 @@
     <string name="countries_buttonlabel">Countries</string>
     <string name="languages_buttonlabel">Languages</string>
     <string name="search_buttonlabel">Search</string>
+    <string name="retry_buttonlabel">Retry</string>
+    <string name="read_offline_buttonlabel">Read Offline</string>
     <string name="country_bundlekey">country</string>
+    <string name="error_message">Oops! Something went wrong..\n Please try again.</string>
+    <string name="no_internet_message">Oops! Looks like you are offline.\n Would like to read news offline?</string>
 </resources>
