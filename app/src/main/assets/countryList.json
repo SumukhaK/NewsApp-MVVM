@@ -1,0 +1,76 @@
+{
+  "countries": [
+    {
+      "Name": "Afghanistan",
+      "Code": "af"
+    },
+    {
+      "Name": "Australia",
+      "Code": "au"
+    },
+    {
+      "Name": "Brazil",
+      "Code": "br"
+    },
+    {
+      "Name": "Canada",
+      "Code": "ca"
+    },
+    {
+      "Name": "Denmark",
+      "Code": "dk"
+    },
+    {
+      "Name": "Egypt",
+      "Code": "eg"
+    },
+    {
+      "Name": "Fiji",
+      "Code": "fj"
+    },
+    {
+      "Name": "France",
+      "Code": "fr"
+    },
+    {
+      "Name": "Germany",
+      "Code": "de"
+    },
+    {
+      "Name": "Greece",
+      "Code": "gr"
+    },
+    {
+      "Name": "Hong Kong",
+      "Code": "hk"
+    },
+    {
+      "Name": "India",
+      "Code": "in"
+    },
+    {
+      "Name": "Japan",
+      "Code": "jp"
+    },
+    {
+      "Name": "Mexico",
+      "Code": "mx"
+    },
+    {
+      "Name": "United Arab Emirates",
+      "Code": "ae"
+    },
+    {
+      "Name": "United Kingdom",
+      "Code": "uk"
+    },
+    {
+      "Name": "France",
+      "Code": "fr"
+    },
+    {
+      "Name": "United States",
+      "Code": "us"
+    }
+  ]
+}

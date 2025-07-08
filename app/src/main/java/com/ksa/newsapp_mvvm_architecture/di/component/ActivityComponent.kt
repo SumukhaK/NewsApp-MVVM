@@ -11,4 +11,5 @@ import dagger.Component
 interface ActivityComponent {
     fun inject(activity: TopHeadlinesActivity)
     fun injectNewsSources(activity: NewsSourcesActivity)
+    //fun injectCountryList(activity: NewsSourcesActivity)
 }
