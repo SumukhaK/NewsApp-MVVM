@@ -1,4 +1,4 @@
-package com.ksa.newsapp_mvvm_architecture.ui.base.countrylist
+package com.ksa.newsapp_mvvm_architecture.ui.countrylist
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -20,7 +20,7 @@ class CountryListViewModel (private val countryListRepository: CountryListReposi
         getCountryList()
     }
 
-    private fun getCountryList(){
+    fun getCountryList(){
         viewModelScope.launch {
             countryListRepository.getCountryList().catch { error ->
                 _uiState.value = UiState.Error(error.message.toString())

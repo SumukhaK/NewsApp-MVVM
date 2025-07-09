@@ -8,7 +8,8 @@ import com.ksa.newsapp_mvvm_architecture.data.repository.NewsSourcesRepository
 import com.ksa.newsapp_mvvm_architecture.data.repository.TopHeadlinesRepository
 import com.ksa.newsapp_mvvm_architecture.di.ActivityContext
 import com.ksa.newsapp_mvvm_architecture.ui.base.ViewModelProviderFactory
-import com.ksa.newsapp_mvvm_architecture.ui.base.countrylist.CountryListViewModel
+import com.ksa.newsapp_mvvm_architecture.ui.countrylist.CountryListAdapter
+import com.ksa.newsapp_mvvm_architecture.ui.countrylist.CountryListViewModel
 import com.ksa.newsapp_mvvm_architecture.ui.newssources.NewsSourcesAdapter
 import com.ksa.newsapp_mvvm_architecture.ui.newssources.NewsSourcesViewModel
 import com.ksa.newsapp_mvvm_architecture.ui.topheadline.TopHeadlineAdapter
@@ -53,4 +54,7 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     fun provideNewsSourcesAdapter() = NewsSourcesAdapter(ArrayList())
+
+    @Provides
+    fun providesCountryListAdapter() = CountryListAdapter(ArrayList())
 }

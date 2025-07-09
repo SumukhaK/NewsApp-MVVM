@@ -3,13 +3,9 @@ package com.ksa.newsapp_mvvm_architecture.ui.mainscreen
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.ksa.newsapp_mvvm_architecture.R
 import com.ksa.newsapp_mvvm_architecture.databinding.ActivityMainBinding
-import com.ksa.newsapp_mvvm_architecture.databinding.ActivityTopHeadlinesBinding
+import com.ksa.newsapp_mvvm_architecture.ui.countrylist.CountryListActivity
 import com.ksa.newsapp_mvvm_architecture.ui.newssources.NewsSourcesActivity
 import com.ksa.newsapp_mvvm_architecture.ui.topheadline.TopHeadlinesActivity
 
@@ -29,10 +25,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun navigateToNewsSources(view: View) {
-        startActivity(NewsSourcesActivity.startNewsSourcesActivity(this, ""))
+        startActivity(NewsSourcesActivity.startNewsSourcesActivity(this))
     }
 
-    fun navigateToCountries(view: View) {}
+    fun navigateToCountries(view: View) {
+        startActivity(CountryListActivity.startCountryListActivity(this))
+    }
 
     fun navigateToLanguages(view: View) {
         Toast.makeText(this,

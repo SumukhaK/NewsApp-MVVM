@@ -21,6 +21,7 @@ import com.ksa.newsapp_mvvm_architecture.databinding.DisplayErrorMessageBinding
 import com.ksa.newsapp_mvvm_architecture.di.component.DaggerActivityComponent
 import com.ksa.newsapp_mvvm_architecture.di.module.ActivityModule
 import com.ksa.newsapp_mvvm_architecture.ui.base.UiState
+import com.ksa.newsapp_mvvm_architecture.ui.countrylist.CountryListViewModel
 import com.ksa.newsapp_mvvm_architecture.utils.AppConstants
 import com.ksa.newsapp_mvvm_architecture.utils.AppConstants.COUNTRY
 import com.ksa.newsapp_mvvm_architecture.utils.AppConstants.COUNTRY_BUNDLE_KEY
@@ -84,6 +85,7 @@ class TopHeadlinesActivity : AppCompatActivity() {
         retryBtn.setOnClickListener {
             retryFetchingNews()
         }
+
     }
 
     private fun retryFetchingNews() {

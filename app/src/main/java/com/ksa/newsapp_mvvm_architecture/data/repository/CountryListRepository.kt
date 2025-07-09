@@ -12,7 +12,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class CountryListRepository @Inject constructor(private val context: Context) {
+class CountryListRepository @Inject constructor(@ApplicationContext private val context: Context) {
 
     fun getCountryList() : Flow<List<Country>> {
         val countryJsonToString = ReadJSONFromAssets(context,"countryList.json")
