@@ -1,6 +1,6 @@
 package com.ksa.newsapp_mvvm_architecture.ui.topheadline
 
-import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -17,14 +16,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ksa.newsapp_mvvm_architecture.NewsApplication
 import com.ksa.newsapp_mvvm_architecture.data.model.Article
 import com.ksa.newsapp_mvvm_architecture.databinding.ActivityTopHeadlinesBinding
-import com.ksa.newsapp_mvvm_architecture.databinding.DisplayErrorMessageBinding
 import com.ksa.newsapp_mvvm_architecture.di.component.DaggerActivityComponent
 import com.ksa.newsapp_mvvm_architecture.di.module.ActivityModule
 import com.ksa.newsapp_mvvm_architecture.ui.base.UiState
-import com.ksa.newsapp_mvvm_architecture.ui.countrylist.CountryListViewModel
-import com.ksa.newsapp_mvvm_architecture.utils.AppConstants
 import com.ksa.newsapp_mvvm_architecture.utils.AppConstants.COUNTRY
 import com.ksa.newsapp_mvvm_architecture.utils.AppConstants.COUNTRY_BUNDLE_KEY
+import com.ksa.newsapp_mvvm_architecture.utils.AppConstants.NEWS_SOURCES_BUNDLE_KEY
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -54,19 +51,27 @@ class TopHeadlinesActivity : AppCompatActivity() {
     private fun getExtrasFromIntent() {
         val country = intent.getStringExtra(COUNTRY_BUNDLE_KEY)
             ?: COUNTRY
-        //Log.d("COUNTRY in getExtrasFromIntent",country)
+        val source = intent.getStringExtra(NEWS_SOURCES_BUNDLE_KEY) ?: ""
         if(country.isNotEmpty()){
             if(!country.contentEquals("us")){
                 //Log.d("COUNTRY calling fetchNews with ",country)
                 newsListViewModel.fetchNews(country)
             }
         }
+
+        if(!source.isNullOrBlank()){
+            Log.d("COUNTRY source calling fetchNews with ",source)
+            newsListViewModel.fetchNewsFromSource(source)
+        }else{
+            newsListViewModel.fetchNews()
+        }
     }
 
     companion object {
-        fun startHeadlinesActivity(activity: Activity, country : String) : Intent {
-            return Intent(activity, TopHeadlinesActivity::class.java).apply {
+        fun startHeadlinesActivity(context: Context, country : String, source:String = "") : Intent {
+            return Intent(context, TopHeadlinesActivity::class.java).apply {
                     this.putExtra(COUNTRY_BUNDLE_KEY,country)
+                    this.putExtra(NEWS_SOURCES_BUNDLE_KEY,source)
             }
         }
     }
