@@ -10,9 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.ksa.newsapp_mvvm_architecture.NewsApplication
 import com.ksa.newsapp_mvvm_architecture.data.model.Source
 import com.ksa.newsapp_mvvm_architecture.databinding.ActivityNewsSourcesBinding
@@ -22,7 +20,7 @@ import com.ksa.newsapp_mvvm_architecture.ui.base.UiState
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class NewsSourcesActivity : AppCompatActivity() {
+class NewsSourcesActivity : AppCompatActivity(){
 
     @Inject
     lateinit var newsSourcesViewModel: NewsSourcesViewModel

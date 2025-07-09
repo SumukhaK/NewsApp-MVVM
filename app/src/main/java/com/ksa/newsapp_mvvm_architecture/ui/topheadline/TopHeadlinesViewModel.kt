@@ -1,13 +1,10 @@
 package com.ksa.newsapp_mvvm_architecture.ui.topheadline
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ksa.newsapp_mvvm_architecture.data.model.Article
 import com.ksa.newsapp_mvvm_architecture.data.repository.TopHeadlinesRepository
 import com.ksa.newsapp_mvvm_architecture.ui.base.UiState
-import com.ksa.newsapp_mvvm_architecture.utils.AppConstants.COUNTRY
-import com.ksa.newsapp_mvvm_architecture.utils.AppConstants.COUNTRY_BUNDLE_KEY
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -18,12 +15,8 @@ class TopHeadlinesViewModel(private val topHeadlinesRepository: TopHeadlinesRepo
     private val _uiState = MutableStateFlow<UiState<List<Article>>>(UiState.Loading)
     val uiState: StateFlow<UiState<List<Article>>> = _uiState
 
-    init {
-        fetchNews("")
-    }
-
-    fun fetchNews(country: String){
-       var countryParam :String = "us"
+    fun fetchNews(country: String = ""){
+        var countryParam :String = "us"
         if(country.isNotBlank()){
             countryParam = country
         }
@@ -34,6 +27,19 @@ class TopHeadlinesViewModel(private val topHeadlinesRepository: TopHeadlinesRepo
                 }.collect{
                     _uiState.value = UiState.Success(it)
                 }
+        }
+    }
+
+    fun fetchNewsFromSource(source: String){
+        if(!source.isNullOrBlank()){
+            viewModelScope.launch{
+                topHeadlinesRepository.getHeadlinesFromSelectedSource(source = source)
+                    .catch { e ->
+                        _uiState.value = UiState.Error(e.toString())
+                    }.collect{
+                        _uiState.value = UiState.Success(it)
+                    }
+            }
         }
     }
 }
