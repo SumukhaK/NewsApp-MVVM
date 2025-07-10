@@ -1,6 +1,7 @@
 package com.ksa.newsapp_mvvm_architecture.data.api
 
 import com.ksa.newsapp_mvvm_architecture.data.model.NewsSourcesResponse
+import com.ksa.newsapp_mvvm_architecture.data.model.SearchNewsResponse
 import com.ksa.newsapp_mvvm_architecture.data.model.Source
 import com.ksa.newsapp_mvvm_architecture.data.model.TopHeadlinesResponse
 import com.ksa.newsapp_mvvm_architecture.utils.AppConstants.API_KEY
@@ -21,6 +22,6 @@ interface NetworkService {
     suspend fun getTopHeadlinesFromSelectedSource(@Query("sources") source :String): TopHeadlinesResponse
 
     @Headers("X-Api-Key: $API_KEY")
-    @GET("top-headlines/sources")
-    suspend fun getNewsSources(): NewsSourcesResponse
+    @GET("everything")
+    suspend fun getNewsFromSearch(@Query("q") query: String): SearchNewsResponse
 }
