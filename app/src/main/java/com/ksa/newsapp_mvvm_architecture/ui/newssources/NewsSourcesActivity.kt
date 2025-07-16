@@ -1,8 +1,8 @@
 package com.ksa.newsapp_mvvm_architecture.ui.newssources
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
@@ -50,9 +50,10 @@ class NewsSourcesActivity : AppCompatActivity(){
     }
 
     companion object{
-        fun startNewsSourcesActivity(activity: AppCompatActivity, bundleParam : String=""): Intent{
+        fun startNewsSourcesActivity(context: Context, bundleParam : String="")
+        : Intent{
 
-            return Intent(activity,NewsSourcesActivity::class.java)/*.apply {
+            return Intent(context,NewsSourcesActivity::class.java)/*.apply {
                this.putExtra(NEWS_SOURCES_BUNDLE_KEY,bundleParam)  // uncomment and use it in
                 // the future if required
            }*/
@@ -90,7 +91,8 @@ class NewsSourcesActivity : AppCompatActivity(){
                             newsSourcesBinding.progressBar.visibility = View.GONE
                             newsSourcesBinding.recyclerView.visibility = View.GONE
                             errorView.visibility = View.VISIBLE
-                            Toast.makeText(this@NewsSourcesActivity, it.message, Toast.LENGTH_LONG)
+                            Toast.makeText(this@NewsSourcesActivity,
+                                it.message, Toast.LENGTH_LONG)
                                 .show()
                         }
                     }
@@ -100,7 +102,6 @@ class NewsSourcesActivity : AppCompatActivity(){
     }
 
     private fun renderList(sourceList: List<Source>) {
-        Log.d("UiState.Success Adaptor"," sourceList : "+sourceList.toString())
         newsSourcesAdapter.addData(sourceList)
         newsSourcesAdapter.notifyDataSetChanged()
     }

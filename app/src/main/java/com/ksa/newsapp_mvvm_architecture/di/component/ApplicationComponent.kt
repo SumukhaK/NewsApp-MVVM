@@ -10,7 +10,6 @@ import com.ksa.newsapp_mvvm_architecture.data.repository.TopHeadlinesRepository
 import com.ksa.newsapp_mvvm_architecture.di.ApplicationContext
 import com.ksa.newsapp_mvvm_architecture.di.module.ApplicationModule
 import dagger.Component
-import dagger.Provides
 import javax.inject.Singleton
 
 @Singleton

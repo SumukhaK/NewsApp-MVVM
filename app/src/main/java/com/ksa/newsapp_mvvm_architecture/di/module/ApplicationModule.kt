@@ -1,6 +1,5 @@
 package com.ksa.newsapp_mvvm_architecture.di.module
 
-import android.app.Application
 import android.content.Context
 import com.ksa.newsapp_mvvm_architecture.NewsApplication
 import com.ksa.newsapp_mvvm_architecture.data.api.NetworkService

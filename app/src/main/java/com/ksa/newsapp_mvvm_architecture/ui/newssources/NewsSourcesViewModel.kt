@@ -1,6 +1,5 @@
 package com.ksa.newsapp_mvvm_architecture.ui.newssources
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ksa.newsapp_mvvm_architecture.data.model.Source
@@ -25,7 +24,6 @@ class NewsSourcesViewModel (private val newsSourcesRepository: NewsSourcesReposi
             newsSourcesRepository.getNewsSources().catch {error ->
                 _uiState.value = UiState.Error(error.message.toString())
             }.collect{
-                Log.d("SourcesAPIResponse ",it.toString())
                 _uiState.value = UiState.Success(it)
             }
         }

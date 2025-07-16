@@ -1,6 +1,5 @@
 package com.ksa.newsapp_mvvm_architecture.ui.search
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ksa.newsapp_mvvm_architecture.data.model.Article
@@ -31,7 +30,6 @@ class NewsSearchViewModel (private val newsSearchByKeywordRepository:
     }
 
     fun searchNews(query : String){
-        Log.d("SEARCHQRY",query)
         queryString.value = query
     }
 
@@ -48,7 +46,6 @@ class NewsSearchViewModel (private val newsSearchByKeywordRepository:
                 }.distinctUntilChanged()
                 .flatMapLatest {
                     _uiState.value = UiState.Loading
-                    Log.d("SEARCHQRY-flatMapLatest",it.toString())
                     return@flatMapLatest newsSearchByKeywordRepository
                         .getNewsByKeyword(it)
                         .catch {error ->

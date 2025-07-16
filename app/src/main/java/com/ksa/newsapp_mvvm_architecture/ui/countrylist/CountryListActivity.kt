@@ -1,6 +1,6 @@
 package com.ksa.newsapp_mvvm_architecture.ui.countrylist
 
-import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -40,8 +40,8 @@ class CountryListActivity : AppCompatActivity() {
     }
 
     companion object {
-        fun startCountryListActivity(activity: Activity, bundleParam : String="") : Intent {
-            return Intent(activity, CountryListActivity::class.java)
+        fun startCountryListActivity(context: Context, bundleParam : String="") : Intent {
+            return Intent(context, CountryListActivity::class.java)
         }
     }
 
