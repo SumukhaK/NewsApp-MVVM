@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.ksa.newsapp_mvvm_architecture.data.repository.CountryListRepository
+import com.ksa.newsapp_mvvm_architecture.data.repository.NewsSearchByKeywordRepository
 import com.ksa.newsapp_mvvm_architecture.data.repository.NewsSourcesRepository
 import com.ksa.newsapp_mvvm_architecture.data.repository.TopHeadlinesRepository
 import com.ksa.newsapp_mvvm_architecture.di.ActivityContext
@@ -12,6 +13,7 @@ import com.ksa.newsapp_mvvm_architecture.ui.countrylist.CountryListAdapter
 import com.ksa.newsapp_mvvm_architecture.ui.countrylist.CountryListViewModel
 import com.ksa.newsapp_mvvm_architecture.ui.newssources.NewsSourcesAdapter
 import com.ksa.newsapp_mvvm_architecture.ui.newssources.NewsSourcesViewModel
+import com.ksa.newsapp_mvvm_architecture.ui.search.NewsSearchViewModel
 import com.ksa.newsapp_mvvm_architecture.ui.topheadline.TopHeadlineAdapter
 import com.ksa.newsapp_mvvm_architecture.ui.topheadline.TopHeadlinesViewModel
 import dagger.Module
@@ -26,15 +28,17 @@ class ActivityModule(private val activity: AppCompatActivity) {
     }
 
     @Provides
-    fun provideNewsListViewModel(topHeadlineRepository: TopHeadlinesRepository): TopHeadlinesViewModel {
+    fun provideNewsListViewModel(topHeadlineRepository: TopHeadlinesRepository):
+            TopHeadlinesViewModel {
         return ViewModelProvider(activity,
-       factory = ViewModelProviderFactory(TopHeadlinesViewModel::class) {
+            factory = ViewModelProviderFactory(TopHeadlinesViewModel::class) {
                 TopHeadlinesViewModel(topHeadlineRepository)
             })[TopHeadlinesViewModel::class.java]
     }
 
     @Provides
-    fun provideNewsSourcesViewModel(newsSourcesRepository: NewsSourcesRepository): NewsSourcesViewModel {
+    fun provideNewsSourcesViewModel(newsSourcesRepository: NewsSourcesRepository):
+            NewsSourcesViewModel {
         return ViewModelProvider(activity,
             factory = ViewModelProviderFactory(NewsSourcesViewModel::class){
                 NewsSourcesViewModel(newsSourcesRepository)
@@ -42,11 +46,21 @@ class ActivityModule(private val activity: AppCompatActivity) {
     }
 
     @Provides
-    fun provideCountryListViewModel(countryListRepository: CountryListRepository): CountryListViewModel {
+    fun provideCountryListViewModel(countryListRepository: CountryListRepository):
+            CountryListViewModel {
         return ViewModelProvider(activity,
             factory = ViewModelProviderFactory(CountryListViewModel::class){
                 CountryListViewModel(countryListRepository)
             })[CountryListViewModel::class.java]
+    }
+
+    @Provides
+    fun providesSearchViewModel(searchByKeywordRepository: NewsSearchByKeywordRepository):
+            NewsSearchViewModel{
+        return ViewModelProvider(activity,
+            factory = ViewModelProviderFactory(NewsSearchViewModel::class){
+                NewsSearchViewModel(searchByKeywordRepository)
+            })[NewsSearchViewModel::class.java]
     }
 
     @Provides

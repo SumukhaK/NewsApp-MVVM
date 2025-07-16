@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.ksa.newsapp_mvvm_architecture.databinding.ActivityMainBinding
 import com.ksa.newsapp_mvvm_architecture.ui.countrylist.CountryListActivity
 import com.ksa.newsapp_mvvm_architecture.ui.newssources.NewsSourcesActivity
+import com.ksa.newsapp_mvvm_architecture.ui.search.NewsSearchActivity
 import com.ksa.newsapp_mvvm_architecture.ui.topheadline.TopHeadlinesActivity
 
 class MainActivity : AppCompatActivity() {
@@ -37,5 +38,7 @@ class MainActivity : AppCompatActivity() {
             "News in different languages coming soon..",Toast.LENGTH_LONG).show()
     }
 
-    fun navigateToSearch(view: View) {}
+    fun navigateToSearch(view: View) {
+      startActivity(NewsSearchActivity.startNewsSourcesActivity(this))
+    }
 }

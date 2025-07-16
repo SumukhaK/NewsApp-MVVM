@@ -6,4 +6,6 @@ object AppConstants {
     const val COUNTRY_BUNDLE_KEY = "country"
     const val NEWS_SOURCES_BUNDLE_KEY = "sources"
     const val LANGUAGE_BUNDLE_KEY = "language"
+    const val DEBOUNCE_TIMEOUT : Long = 300
+    const val MINIMUM_CHARS_FOR_SEARCH : Int = 3
 }

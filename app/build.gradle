@@ -48,7 +48,6 @@ dependencies {
     implementation libs.glide
     implementation libs.retrofit
     implementation libs.converter.gson
-    implementation 'android.arch.lifecycle:extensions:1.1.1'
     implementation libs.androidx.lifecycle.viewmodel.ktx
     implementation libs.androidx.lifecycle.runtime.ktx
     implementation libs.logging.interceptor
