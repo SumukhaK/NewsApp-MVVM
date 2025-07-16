@@ -3,7 +3,6 @@ package com.ksa.newsapp_mvvm_architecture.ui.topheadline
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
@@ -40,8 +39,6 @@ class TopHeadlinesActivity : AppCompatActivity() {
         injectDependencies()
         super.onCreate(savedInstanceState)
         binding = ActivityTopHeadlinesBinding.inflate(layoutInflater)
-        errorView = binding.errorLayout.errorConstraintlayout
-        retryBtn = binding.errorLayout.retryButton
         setContentView(binding.root)
         getExtrasFromIntent()
         setupUI()
@@ -54,13 +51,11 @@ class TopHeadlinesActivity : AppCompatActivity() {
         val source = intent.getStringExtra(NEWS_SOURCES_BUNDLE_KEY) ?: ""
         if(country.isNotEmpty()){
             if(!country.contentEquals("us")){
-                //Log.d("COUNTRY calling fetchNews with ",country)
                 newsListViewModel.fetchNews(country)
             }
         }
 
         if(!source.isNullOrBlank()){
-            Log.d("COUNTRY source calling fetchNews with ",source)
             newsListViewModel.fetchNewsFromSource(source)
         }else{
             newsListViewModel.fetchNews()
@@ -68,15 +63,18 @@ class TopHeadlinesActivity : AppCompatActivity() {
     }
 
     companion object {
-        fun startHeadlinesActivity(context: Context, country : String, source:String = "") : Intent {
+        fun startHeadlinesActivity(context: Context, country : String, source:String = "")
+        : Intent {
             return Intent(context, TopHeadlinesActivity::class.java).apply {
-                    this.putExtra(COUNTRY_BUNDLE_KEY,country)
-                    this.putExtra(NEWS_SOURCES_BUNDLE_KEY,source)
+                this.putExtra(COUNTRY_BUNDLE_KEY,country)
+                this.putExtra(NEWS_SOURCES_BUNDLE_KEY,source)
             }
         }
     }
 
     private fun setupUI() {
+        errorView = binding.errorLayout.errorConstraintlayout
+        retryBtn = binding.errorLayout.retryButton
         val recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.addItemDecoration(
@@ -115,11 +113,11 @@ class TopHeadlinesActivity : AppCompatActivity() {
                             binding.recyclerView.visibility = View.GONE
                         }
                         is UiState.Error -> {
-                            //Handle Error
                             binding.progressBar.visibility = View.GONE
                             binding.recyclerView.visibility = View.GONE
                             errorView.visibility = View.VISIBLE
-                            Toast.makeText(this@TopHeadlinesActivity, it.message, Toast.LENGTH_LONG)
+                            Toast.makeText(this@TopHeadlinesActivity,
+                                it.message, Toast.LENGTH_LONG)
                                 .show()
                         }
                     }
@@ -129,7 +127,6 @@ class TopHeadlinesActivity : AppCompatActivity() {
     }
 
     private fun renderList(articleList: List<Article>) {
-        Log.d("UiState.Success Adaptor"," articleList : "+articleList.toString())
         adapter.addData(articleList)
         adapter.notifyDataSetChanged()
     }

@@ -39,6 +39,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun navigateToSearch(view: View) {
-      startActivity(NewsSearchActivity.startNewsSourcesActivity(this))
+        startActivity(NewsSearchActivity.startNewsSourcesActivity(this))
     }
 }
