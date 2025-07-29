@@ -5,6 +5,8 @@ import com.ksa.newsapp_mvvm_architecture.NewsApplication
 import com.ksa.newsapp_mvvm_architecture.data.api.NetworkService
 import com.ksa.newsapp_mvvm_architecture.di.ApplicationContext
 import com.ksa.newsapp_mvvm_architecture.di.BaseURL
+import com.ksa.newsapp_mvvm_architecture.utils.DefaultDispatcherProvider
+import com.ksa.newsapp_mvvm_architecture.utils.DispatcherProvider
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -55,5 +57,11 @@ class ApplicationModule(private val application: NewsApplication) {
             .client(getOkHttpBuilder())
             .build()
             .create(NetworkService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun providesDisptacherProvider(): DispatcherProvider {
+        return DefaultDispatcherProvider()
     }
 }

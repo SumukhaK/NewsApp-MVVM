@@ -51,7 +51,7 @@ class NewsSourcesActivity : AppCompatActivity(){
 
     companion object{
         fun startNewsSourcesActivity(context: Context, bundleParam : String="")
-        : Intent{
+                : Intent{
 
             return Intent(context,NewsSourcesActivity::class.java)/*.apply {
                this.putExtra(NEWS_SOURCES_BUNDLE_KEY,bundleParam)  // uncomment and use it in

@@ -54,6 +54,10 @@ dependencies {
     implementation libs.androidx.browser
     kapt libs.dagger.compiler
     testImplementation libs.junit
+    testImplementation libs.turbine
+    testImplementation(libs.mockito.core.testing)
+    testImplementation(libs.androidx.core.testing)
+    testImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation libs.androidx.junit
     androidTestImplementation libs.androidx.espresso.core
 }
