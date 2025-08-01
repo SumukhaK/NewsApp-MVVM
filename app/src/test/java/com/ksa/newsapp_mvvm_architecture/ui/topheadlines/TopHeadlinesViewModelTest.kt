@@ -7,8 +7,10 @@ import com.ksa.newsapp_mvvm_architecture.ui.base.UiState
 import com.ksa.newsapp_mvvm_architecture.ui.topheadline.TopHeadlinesViewModel
 import com.ksa.newsapp_mvvm_architecture.utils.AppConstants.COUNTRY
 import com.ksa.newsapp_mvvm_architecture.utils.DispatcherProvider
+import com.ksa.newsapp_mvvm_architecture.utils.TestDispatcherProvider
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -30,7 +32,7 @@ class TopHeadlinesViewModelTest {
 
     @Before
     fun setup(){
-       // dispatcherProvider  = Tes
+        dispatcherProvider  = TestDispatcherProvider()
     }
 
     @Test
@@ -40,11 +42,34 @@ class TopHeadlinesViewModelTest {
                 .`when`(topHeadlinesRepository)
                 .getTopHeadlines(COUNTRY)
             val viewModel = TopHeadlinesViewModel(topHeadlinesRepository, dispatcherProvider)
+            viewModel.fetchNews(COUNTRY)
             viewModel.uiState.test {
                 assertEquals(UiState.Success(emptyList<Article>()),awaitItem())
                 cancelAndIgnoreRemainingEvents()
             }
             verify(topHeadlinesRepository, times(1)).getTopHeadlines(COUNTRY)
+        }
+    }
+
+    @Test
+    fun givenServerResponseError_whenFetch_shouldReturnError() {
+        runTest {
+            val errorMessage = "Error Message For You"
+            doReturn(flow<List<Article>> {
+                throw IllegalStateException(errorMessage)
+            }).`when`(topHeadlinesRepository)
+                .getTopHeadlines(COUNTRY)
+
+            val viewModel = TopHeadlinesViewModel(topHeadlinesRepository, dispatcherProvider)
+            viewModel.fetchNews(COUNTRY)
+            viewModel.uiState.test {
+                assertEquals(
+                    UiState.Error(IllegalStateException(errorMessage).toString()),
+                    awaitItem()
+                )
+                cancelAndIgnoreRemainingEvents()
+            }
+            verify(topHeadlinesRepository).getTopHeadlines(COUNTRY)
         }
     }
 }
