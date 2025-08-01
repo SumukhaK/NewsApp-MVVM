@@ -7,7 +7,7 @@ import com.ksa.newsapp_mvvm_architecture.data.repository.NewsSearchByKeywordRepo
 import com.ksa.newsapp_mvvm_architecture.ui.base.UiState
 import com.ksa.newsapp_mvvm_architecture.utils.AppConstants.DEBOUNCE_TIMEOUT
 import com.ksa.newsapp_mvvm_architecture.utils.AppConstants.MINIMUM_CHARS_FOR_SEARCH
-import kotlinx.coroutines.Dispatchers
+import com.ksa.newsapp_mvvm_architecture.utils.DispatcherProvider
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.debounce
@@ -16,9 +16,11 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class NewsSearchViewModel (private val newsSearchByKeywordRepository:
-                           NewsSearchByKeywordRepository) : ViewModel() {
+class NewsSearchViewModel @Inject constructor(private val newsSearchByKeywordRepository:
+                                              NewsSearchByKeywordRepository,
+                                              private val dispatcherProvider: DispatcherProvider) : ViewModel() {
 
     private val _uiState = MutableStateFlow<UiState<List<Article>>>(UiState.Loading)
     val uiState = _uiState
@@ -34,7 +36,7 @@ class NewsSearchViewModel (private val newsSearchByKeywordRepository:
     }
 
     private fun searchNewsBykeyword(){
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcherProvider.main) {
             queryString.debounce(DEBOUNCE_TIMEOUT)
                 .filter{it ->
                     if(it.isNotEmpty() && it.length >= MINIMUM_CHARS_FOR_SEARCH){
@@ -51,7 +53,7 @@ class NewsSearchViewModel (private val newsSearchByKeywordRepository:
                         .catch {error ->
                             uiState.value = UiState.Error(error.message.toString())
                         }
-                }.flowOn(Dispatchers.IO)
+                }.flowOn(dispatcherProvider.io)
                 .collect{
                     uiState.value = UiState.Success(it)
                 }

@@ -9,6 +9,7 @@ import com.ksa.newsapp_mvvm_architecture.data.repository.NewsSourcesRepository
 import com.ksa.newsapp_mvvm_architecture.data.repository.TopHeadlinesRepository
 import com.ksa.newsapp_mvvm_architecture.di.ApplicationContext
 import com.ksa.newsapp_mvvm_architecture.di.module.ApplicationModule
+import com.ksa.newsapp_mvvm_architecture.utils.DispatcherProvider
 import dagger.Component
 import javax.inject.Singleton
 
@@ -29,4 +30,6 @@ interface ApplicationComponent {
     fun getCountryListRepository(): CountryListRepository
 
     fun getSearchNewsRepository(): NewsSearchByKeywordRepository
+
+    fun getDispatcher(): DispatcherProvider
 }

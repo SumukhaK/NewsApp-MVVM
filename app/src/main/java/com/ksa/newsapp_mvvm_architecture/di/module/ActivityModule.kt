@@ -16,6 +16,7 @@ import com.ksa.newsapp_mvvm_architecture.ui.newssources.NewsSourcesViewModel
 import com.ksa.newsapp_mvvm_architecture.ui.search.NewsSearchViewModel
 import com.ksa.newsapp_mvvm_architecture.ui.topheadline.TopHeadlineAdapter
 import com.ksa.newsapp_mvvm_architecture.ui.topheadline.TopHeadlinesViewModel
+import com.ksa.newsapp_mvvm_architecture.utils.DispatcherProvider
 import dagger.Module
 import dagger.Provides
 
@@ -28,38 +29,42 @@ class ActivityModule(private val activity: AppCompatActivity) {
     }
 
     @Provides
-    fun provideNewsListViewModel(topHeadlineRepository: TopHeadlinesRepository):
+    fun provideNewsListViewModel(topHeadlineRepository: TopHeadlinesRepository,
+                                 dispatcherProvider: DispatcherProvider):
             TopHeadlinesViewModel {
         return ViewModelProvider(activity,
             factory = ViewModelProviderFactory(TopHeadlinesViewModel::class) {
-                TopHeadlinesViewModel(topHeadlineRepository)
+                TopHeadlinesViewModel(topHeadlineRepository,dispatcherProvider)
             })[TopHeadlinesViewModel::class.java]
     }
 
     @Provides
-    fun provideNewsSourcesViewModel(newsSourcesRepository: NewsSourcesRepository):
+    fun provideNewsSourcesViewModel(newsSourcesRepository: NewsSourcesRepository,
+                                    dispatcherProvider: DispatcherProvider):
             NewsSourcesViewModel {
         return ViewModelProvider(activity,
             factory = ViewModelProviderFactory(NewsSourcesViewModel::class){
-                NewsSourcesViewModel(newsSourcesRepository)
+                NewsSourcesViewModel(newsSourcesRepository,dispatcherProvider)
             })[NewsSourcesViewModel::class.java]
     }
 
     @Provides
-    fun provideCountryListViewModel(countryListRepository: CountryListRepository):
+    fun provideCountryListViewModel(countryListRepository: CountryListRepository,
+                                    dispatcherProvider: DispatcherProvider):
             CountryListViewModel {
         return ViewModelProvider(activity,
             factory = ViewModelProviderFactory(CountryListViewModel::class){
-                CountryListViewModel(countryListRepository)
+                CountryListViewModel(countryListRepository,dispatcherProvider)
             })[CountryListViewModel::class.java]
     }
 
     @Provides
-    fun providesSearchViewModel(searchByKeywordRepository: NewsSearchByKeywordRepository):
+    fun providesSearchViewModel(searchByKeywordRepository: NewsSearchByKeywordRepository,
+                                dispatcherProvider: DispatcherProvider):
             NewsSearchViewModel{
         return ViewModelProvider(activity,
             factory = ViewModelProviderFactory(NewsSearchViewModel::class){
-                NewsSearchViewModel(searchByKeywordRepository)
+                NewsSearchViewModel(searchByKeywordRepository,dispatcherProvider)
             })[NewsSearchViewModel::class.java]
     }
 
