@@ -6,6 +6,7 @@ import com.ksa.newsapp_mvvm_architecture.data.repository.TopHeadlinesRepository
 import com.ksa.newsapp_mvvm_architecture.ui.base.UiState
 import com.ksa.newsapp_mvvm_architecture.ui.topheadline.TopHeadlinesViewModel
 import com.ksa.newsapp_mvvm_architecture.utils.AppConstants.COUNTRY
+import com.ksa.newsapp_mvvm_architecture.utils.AppConstants.SOURCE_CONST
 import com.ksa.newsapp_mvvm_architecture.utils.DispatcherProvider
 import com.ksa.newsapp_mvvm_architecture.utils.TestDispatcherProvider
 import junit.framework.TestCase.assertEquals
@@ -52,7 +53,7 @@ class TopHeadlinesViewModelTest {
     }
 
     @Test
-    fun givenServerResponseError_whenFetch_shouldReturnError() {
+    fun givenServerResponseError_whenFetchNews_shouldReturnError() {
         runTest {
             val errorMessage = "Error Message For You"
             doReturn(flow<List<Article>> {
@@ -70,6 +71,45 @@ class TopHeadlinesViewModelTest {
                 cancelAndIgnoreRemainingEvents()
             }
             verify(topHeadlinesRepository).getTopHeadlines(COUNTRY)
+        }
+    }
+
+    @Test
+    fun fetchNewsFromSource_whenRepositoryResponseSuccess_shouldSetSuccessUiState(){
+        runTest {
+            doReturn(flowOf(emptyList<Article>()))
+                .`when`(topHeadlinesRepository)
+                .getHeadlinesFromSelectedSource(SOURCE_CONST)
+            val viewModel = TopHeadlinesViewModel(topHeadlinesRepository, dispatcherProvider)
+            viewModel.fetchNewsFromSource(SOURCE_CONST)
+            viewModel.uiState.test {
+                assertEquals(UiState.Success(emptyList<Article>()),awaitItem())
+                cancelAndIgnoreRemainingEvents()
+            }
+            verify(topHeadlinesRepository, times(1))
+                .getHeadlinesFromSelectedSource(SOURCE_CONST)
+        }
+    }
+
+    @Test
+    fun givenServerResponseError_whenFetchNewsFromSource_shouldReturnError() {
+        runTest {
+            val errorMessage = "Error Message For You"
+            doReturn(flow<List<Article>> {
+                throw IllegalStateException(errorMessage)
+            }).`when`(topHeadlinesRepository)
+                .getHeadlinesFromSelectedSource(SOURCE_CONST)
+
+            val viewModel = TopHeadlinesViewModel(topHeadlinesRepository, dispatcherProvider)
+            viewModel.fetchNewsFromSource(SOURCE_CONST)
+            viewModel.uiState.test {
+                assertEquals(
+                    UiState.Error(IllegalStateException(errorMessage).toString()),
+                    awaitItem()
+                )
+                cancelAndIgnoreRemainingEvents()
+            }
+            verify(topHeadlinesRepository).getHeadlinesFromSelectedSource(SOURCE_CONST)
         }
     }
 }
