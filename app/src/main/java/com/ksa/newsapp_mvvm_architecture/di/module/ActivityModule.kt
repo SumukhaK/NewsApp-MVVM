@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.ksa.newsapp_mvvm_architecture.data.repository.CountryListRepository
 import com.ksa.newsapp_mvvm_architecture.data.repository.NewsSearchByKeywordRepository
 import com.ksa.newsapp_mvvm_architecture.data.repository.NewsSourcesRepository
+import com.ksa.newsapp_mvvm_architecture.data.repository.OfflineArticlesRepository
 import com.ksa.newsapp_mvvm_architecture.data.repository.TopHeadlinesRepository
 import com.ksa.newsapp_mvvm_architecture.di.ActivityContext
 import com.ksa.newsapp_mvvm_architecture.ui.base.ViewModelProviderFactory
@@ -13,6 +14,7 @@ import com.ksa.newsapp_mvvm_architecture.ui.countrylist.CountryListAdapter
 import com.ksa.newsapp_mvvm_architecture.ui.countrylist.CountryListViewModel
 import com.ksa.newsapp_mvvm_architecture.ui.newssources.NewsSourcesAdapter
 import com.ksa.newsapp_mvvm_architecture.ui.newssources.NewsSourcesViewModel
+import com.ksa.newsapp_mvvm_architecture.ui.offlinefirst.OfflineFirstViewModel
 import com.ksa.newsapp_mvvm_architecture.ui.search.NewsSearchViewModel
 import com.ksa.newsapp_mvvm_architecture.ui.topheadline.TopHeadlineAdapter
 import com.ksa.newsapp_mvvm_architecture.ui.topheadline.TopHeadlinesViewModel
@@ -66,6 +68,16 @@ class ActivityModule(private val activity: AppCompatActivity) {
             factory = ViewModelProviderFactory(NewsSearchViewModel::class){
                 NewsSearchViewModel(searchByKeywordRepository,dispatcherProvider)
             })[NewsSearchViewModel::class.java]
+    }
+
+    @Provides
+    fun providesOfflineFirstViewModel(offlineArticlesRepository: OfflineArticlesRepository,
+                                      dispatcherProvider: DispatcherProvider):
+            OfflineFirstViewModel{
+        return ViewModelProvider(activity,
+            factory = ViewModelProviderFactory(OfflineFirstViewModel::class){
+                OfflineFirstViewModel(offlineArticlesRepository,dispatcherProvider)
+            })[OfflineFirstViewModel::class.java]
     }
 
     @Provides
