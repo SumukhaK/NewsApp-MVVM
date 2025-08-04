@@ -3,6 +3,7 @@ package com.ksa.newsapp_mvvm_architecture.di.component
 import android.content.Context
 import com.ksa.newsapp_mvvm_architecture.NewsApplication
 import com.ksa.newsapp_mvvm_architecture.data.api.NetworkService
+import com.ksa.newsapp_mvvm_architecture.data.local.DatabaseService
 import com.ksa.newsapp_mvvm_architecture.data.repository.CountryListRepository
 import com.ksa.newsapp_mvvm_architecture.data.repository.NewsSearchByKeywordRepository
 import com.ksa.newsapp_mvvm_architecture.data.repository.NewsSourcesRepository
@@ -23,6 +24,8 @@ interface ApplicationComponent {
     fun getApplicationContext(): Context
 
     fun getNetworkService(): NetworkService
+
+    fun getDataBaseService(): DatabaseService
 
     fun getTopHeadlineRepository(): TopHeadlinesRepository
 
