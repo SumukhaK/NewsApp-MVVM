@@ -19,6 +19,7 @@ import com.ksa.newsapp_mvvm_architecture.ui.search.NewsSearchViewModel
 import com.ksa.newsapp_mvvm_architecture.ui.topheadline.TopHeadlineAdapter
 import com.ksa.newsapp_mvvm_architecture.ui.topheadline.TopHeadlinesViewModel
 import com.ksa.newsapp_mvvm_architecture.utils.DispatcherProvider
+import com.ksa.newsapp_mvvm_architecture.utils.NetworkHelper
 import dagger.Module
 import dagger.Provides
 
@@ -72,11 +73,12 @@ class ActivityModule(private val activity: AppCompatActivity) {
 
     @Provides
     fun providesOfflineFirstViewModel(offlineArticlesRepository: OfflineArticlesRepository,
+                                      networkHelper: NetworkHelper,
                                       dispatcherProvider: DispatcherProvider):
             OfflineFirstViewModel{
         return ViewModelProvider(activity,
             factory = ViewModelProviderFactory(OfflineFirstViewModel::class){
-                OfflineFirstViewModel(offlineArticlesRepository,dispatcherProvider)
+                OfflineFirstViewModel(offlineArticlesRepository,networkHelper,dispatcherProvider)
             })[OfflineFirstViewModel::class.java]
     }
 

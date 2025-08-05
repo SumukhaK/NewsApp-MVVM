@@ -12,6 +12,7 @@ import com.ksa.newsapp_mvvm_architecture.data.repository.TopHeadlinesRepository
 import com.ksa.newsapp_mvvm_architecture.di.ApplicationContext
 import com.ksa.newsapp_mvvm_architecture.di.module.ApplicationModule
 import com.ksa.newsapp_mvvm_architecture.utils.DispatcherProvider
+import com.ksa.newsapp_mvvm_architecture.utils.NetworkHelper
 import dagger.Component
 import javax.inject.Singleton
 
@@ -38,4 +39,6 @@ interface ApplicationComponent {
     fun getOfflineFirstRepository(): OfflineArticlesRepository
 
     fun getDispatcher(): DispatcherProvider
+
+    fun getNetworkHelper(): NetworkHelper
 }

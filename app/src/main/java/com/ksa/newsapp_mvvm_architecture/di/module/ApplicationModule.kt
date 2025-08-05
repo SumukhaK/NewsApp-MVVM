@@ -11,7 +11,9 @@ import com.ksa.newsapp_mvvm_architecture.di.ApplicationContext
 import com.ksa.newsapp_mvvm_architecture.di.BaseURL
 import com.ksa.newsapp_mvvm_architecture.di.DatabaseName
 import com.ksa.newsapp_mvvm_architecture.utils.DefaultDispatcherProvider
+import com.ksa.newsapp_mvvm_architecture.utils.DefaultNetworkHelper
 import com.ksa.newsapp_mvvm_architecture.utils.DispatcherProvider
+import com.ksa.newsapp_mvvm_architecture.utils.NetworkHelper
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -68,6 +70,12 @@ class ApplicationModule(private val application: NewsApplication) {
     @Singleton
     fun providesDisptacherProvider(): DispatcherProvider {
         return DefaultDispatcherProvider()
+    }
+
+    @Provides
+    @Singleton
+    fun provideNetworkHelper(@ApplicationContext context: Context): NetworkHelper {
+        return DefaultNetworkHelper(context)
     }
 
     @DatabaseName

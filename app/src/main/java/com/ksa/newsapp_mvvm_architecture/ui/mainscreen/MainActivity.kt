@@ -26,10 +26,10 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun navigateToOfflineReading(view: View){
-        val intent = ReadOfflineActivity.startOfflineActivity(this, "")
-        startActivity(intent)
+    fun navigateToOfflineReading(view: View) {
+        startActivity(ReadOfflineActivity.startOfflineActivity(this))
     }
+
     fun navigateToNewsSources(view: View) {
         startActivity(NewsSourcesActivity.startNewsSourcesActivity(this))
     }
@@ -39,8 +39,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun navigateToLanguages(view: View) {
-        Toast.makeText(this,
-            "News in different languages coming soon..",Toast.LENGTH_LONG).show()
+        Toast.makeText(
+            this,
+            "News in different languages coming soon..", Toast.LENGTH_LONG
+        ).show()
     }
 
     fun navigateToSearch(view: View) {
