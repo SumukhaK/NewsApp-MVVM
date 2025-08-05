@@ -1,6 +1,5 @@
 package com.ksa.newsapp_mvvm_architecture.ui.offlinefirst
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ksa.newsapp_mvvm_architecture.data.local.entity.ArticleEntity
@@ -9,7 +8,6 @@ import com.ksa.newsapp_mvvm_architecture.ui.base.UiState
 import com.ksa.newsapp_mvvm_architecture.utils.AppConstants.COUNTRY
 import com.ksa.newsapp_mvvm_architecture.utils.DispatcherProvider
 import com.ksa.newsapp_mvvm_architecture.utils.NetworkHelper
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -47,7 +45,7 @@ class OfflineFirstViewModel @Inject constructor(
     private fun fetchArticles() {
         viewModelScope.launch {
             offlineArticlesRepository.getArticles(COUNTRY)
-                .flowOn(Dispatchers.IO)
+                .flowOn(dispatcherProvider.io)
                 .catch { e ->
                     _uiState.value = UiState.Error(e.toString())
                 }.collect {
@@ -59,7 +57,7 @@ class OfflineFirstViewModel @Inject constructor(
     private fun fetchArticlesDirectlyFromDB() {
         viewModelScope.launch {
             offlineArticlesRepository.getArticlesDirectlyFromDB()
-                .flowOn(Dispatchers.IO)
+                .flowOn(dispatcherProvider.io)
                 .catch { e ->
                     _uiState.value = UiState.Error(e.toString())
                 }.collect {
