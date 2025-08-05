@@ -3,13 +3,16 @@ package com.ksa.newsapp_mvvm_architecture.di.component
 import android.content.Context
 import com.ksa.newsapp_mvvm_architecture.NewsApplication
 import com.ksa.newsapp_mvvm_architecture.data.api.NetworkService
+import com.ksa.newsapp_mvvm_architecture.data.local.DatabaseService
 import com.ksa.newsapp_mvvm_architecture.data.repository.CountryListRepository
 import com.ksa.newsapp_mvvm_architecture.data.repository.NewsSearchByKeywordRepository
 import com.ksa.newsapp_mvvm_architecture.data.repository.NewsSourcesRepository
+import com.ksa.newsapp_mvvm_architecture.data.repository.OfflineArticlesRepository
 import com.ksa.newsapp_mvvm_architecture.data.repository.TopHeadlinesRepository
 import com.ksa.newsapp_mvvm_architecture.di.ApplicationContext
 import com.ksa.newsapp_mvvm_architecture.di.module.ApplicationModule
 import com.ksa.newsapp_mvvm_architecture.utils.DispatcherProvider
+import com.ksa.newsapp_mvvm_architecture.utils.NetworkHelper
 import dagger.Component
 import javax.inject.Singleton
 
@@ -23,6 +26,8 @@ interface ApplicationComponent {
 
     fun getNetworkService(): NetworkService
 
+    fun getDataBaseService(): DatabaseService
+
     fun getTopHeadlineRepository(): TopHeadlinesRepository
 
     fun getNewsSourceRepository(): NewsSourcesRepository
@@ -31,5 +36,9 @@ interface ApplicationComponent {
 
     fun getSearchNewsRepository(): NewsSearchByKeywordRepository
 
+    fun getOfflineFirstRepository(): OfflineArticlesRepository
+
     fun getDispatcher(): DispatcherProvider
+
+    fun getNetworkHelper(): NetworkHelper
 }

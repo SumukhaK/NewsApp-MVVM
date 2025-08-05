@@ -29,6 +29,15 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="@dimen/button_height"
+            android:id="@+id/offlinefirst_button"
+            android:onClick="navigateToOfflineReading"
+            android:layout_marginTop="@dimen/button_margins"
+            android:layout_marginBottom="@dimen/button_margins"
+            android:text="@string/offlinefirst_buttonlabel"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_height"
             android:id="@+id/newssources_button"
             android:onClick="navigateToNewsSources"
             android:layout_marginTop="@dimen/button_margins"

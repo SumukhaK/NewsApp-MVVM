@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">NewsApp-MVVM-Architecture</string>
     <string name="topheadlineds_buttonlabel">Top Headlines</string>
+    <string name="offlinefirst_buttonlabel">Read Offline</string>
     <string name="newssources_buttonlabel">News Sources</string>
     <string name="countries_buttonlabel">Countries</string>
     <string name="languages_buttonlabel">Languages</string>
