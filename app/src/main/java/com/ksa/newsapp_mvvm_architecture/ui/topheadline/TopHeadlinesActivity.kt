@@ -55,7 +55,7 @@ class TopHeadlinesActivity : AppCompatActivity() {
             }
         }
 
-        if (!source.isNullOrBlank()) {
+        if (source.isNotBlank()) {
             newsListViewModel.fetchNewsFromSource(source)
         } else {
             newsListViewModel.fetchNews()

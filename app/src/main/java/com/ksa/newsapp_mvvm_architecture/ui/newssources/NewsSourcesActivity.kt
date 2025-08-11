@@ -44,7 +44,7 @@ class NewsSourcesActivity : AppCompatActivity(){
         newsSourcesBinding.recyclerView.adapter = newsSourcesAdapter
 
         retryBtn.setOnClickListener {
-            newsSourcesViewModel.getNewsSources()
+            retryFetchingNewsSources()
         }
     }
 
