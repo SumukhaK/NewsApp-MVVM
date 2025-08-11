@@ -27,6 +27,11 @@ News app is built with most stable Android tools and frameworks and promises you
 
 
 
+**Branches**<br />
+	- **master** : Base project with XML UI, Dagger2 as Dependency Injection framework. <br/>
+ 	- **master-migration** : Base project migrated to Hilt-Dagger as DI and Jetpack compose (work in progress) as UI.<br/>
+
+
  **Features implemented**:
 
 * TopHeadlines of the news <br />
