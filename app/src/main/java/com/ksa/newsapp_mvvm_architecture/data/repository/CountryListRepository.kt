@@ -4,8 +4,8 @@ import android.content.Context
 import com.google.gson.Gson
 import com.ksa.newsapp_mvvm_architecture.data.model.Country
 import com.ksa.newsapp_mvvm_architecture.data.model.CountryListResponse
-import com.ksa.newsapp_mvvm_architecture.di.ApplicationContext
 import com.ksa.newsapp_mvvm_architecture.utils.ReadJSONFromAssets
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject

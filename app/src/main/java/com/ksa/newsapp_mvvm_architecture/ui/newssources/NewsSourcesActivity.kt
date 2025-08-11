@@ -8,32 +8,31 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
-import com.ksa.newsapp_mvvm_architecture.NewsApplication
 import com.ksa.newsapp_mvvm_architecture.data.model.Source
 import com.ksa.newsapp_mvvm_architecture.databinding.ActivityNewsSourcesBinding
-import com.ksa.newsapp_mvvm_architecture.di.component.DaggerActivityComponent
-import com.ksa.newsapp_mvvm_architecture.di.module.ActivityModule
 import com.ksa.newsapp_mvvm_architecture.ui.base.UiState
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class NewsSourcesActivity : AppCompatActivity(){
 
-    @Inject
-    lateinit var newsSourcesViewModel: NewsSourcesViewModel
+    private lateinit var newsSourcesViewModel: NewsSourcesViewModel
     @Inject
     lateinit var newsSourcesAdapter: NewsSourcesAdapter
     lateinit var newsSourcesBinding: ActivityNewsSourcesBinding
     private lateinit var errorView: View
     private lateinit var retryBtn: Button
     override fun onCreate(savedInstanceState: Bundle?) {
-        injectDependencies()
         super.onCreate(savedInstanceState)
         newsSourcesBinding = ActivityNewsSourcesBinding.inflate(layoutInflater)
         setContentView(newsSourcesBinding.root)
+        setupViewModel()
         setUpUi()
         setupObserver()
     }
@@ -58,13 +57,6 @@ class NewsSourcesActivity : AppCompatActivity(){
                 // the future if required
            }*/
         }
-    }
-
-    private fun injectDependencies() {
-        DaggerActivityComponent.builder()
-            .applicationComponent((application as NewsApplication).applicationComponent)
-            .activityModule(ActivityModule(this))
-            .build().injectNewsSources(this)
     }
 
     private fun retryFetchingNewsSources() {
@@ -105,4 +97,9 @@ class NewsSourcesActivity : AppCompatActivity(){
         newsSourcesAdapter.addData(sourceList)
         newsSourcesAdapter.notifyDataSetChanged()
     }
+
+    private fun setupViewModel() {
+        newsSourcesViewModel = ViewModelProvider(this)[NewsSourcesViewModel::class.java]
+    }
+
 }

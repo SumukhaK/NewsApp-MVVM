@@ -2,8 +2,11 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.org.jetbrains.kotlin.kapt)
+    alias(libs.plugins.hilt)
 }
-
+hilt {
+    enableAggregatingTask = false
+}
 android {
     namespace 'com.ksa.newsapp_mvvm_architecture'
     compileSdk 34
@@ -44,7 +47,6 @@ dependencies {
     implementation libs.material
     implementation libs.androidx.activity
     implementation libs.androidx.constraintlayout
-    implementation libs.dagger
     implementation libs.glide
     implementation libs.retrofit
     implementation libs.converter.gson
@@ -54,8 +56,9 @@ dependencies {
     implementation libs.androidx.browser
     implementation libs.androidx.room.runtime
     implementation libs.androidx.room.ktx
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
     kapt libs.androidx.room.compiler
-    kapt libs.dagger.compiler
     testImplementation libs.junit
     testImplementation libs.turbine
     testImplementation libs.mockito.core

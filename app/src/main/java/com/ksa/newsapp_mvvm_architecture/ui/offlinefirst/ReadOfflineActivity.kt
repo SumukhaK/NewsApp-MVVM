@@ -8,25 +8,25 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ksa.newsapp_mvvm_architecture.NewsApplication
 import com.ksa.newsapp_mvvm_architecture.data.local.entity.ArticleEntity
 import com.ksa.newsapp_mvvm_architecture.data.model.Article
 import com.ksa.newsapp_mvvm_architecture.data.model.Source
 import com.ksa.newsapp_mvvm_architecture.databinding.ActivityTopHeadlinesBinding
-import com.ksa.newsapp_mvvm_architecture.di.component.DaggerActivityComponent
-import com.ksa.newsapp_mvvm_architecture.di.module.ActivityModule
 import com.ksa.newsapp_mvvm_architecture.ui.base.UiState
 import com.ksa.newsapp_mvvm_architecture.ui.topheadline.TopHeadlineAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class ReadOfflineActivity : AppCompatActivity() {
-    @Inject
-    lateinit var offlineFirstViewModel: OfflineFirstViewModel
+
+    private lateinit var offlineFirstViewModel: OfflineFirstViewModel
 
     @Inject
     lateinit var adapter: TopHeadlineAdapter
@@ -36,10 +36,10 @@ class ReadOfflineActivity : AppCompatActivity() {
     private lateinit var retryBtn: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        injectDependencies()
         super.onCreate(savedInstanceState)
         binding = ActivityTopHeadlinesBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setupViewModel()
         setupUI()
         setupObserver()
     }
@@ -121,9 +121,7 @@ class ReadOfflineActivity : AppCompatActivity() {
         adapter.notifyDataSetChanged()
     }
 
-    private fun injectDependencies() {
-       DaggerActivityComponent.builder()
-            .applicationComponent((application as NewsApplication).applicationComponent)
-            .activityModule(ActivityModule(this)).build().injectOfflineRead(this)
+    private fun setupViewModel() {
+        offlineFirstViewModel = ViewModelProvider(this)[OfflineFirstViewModel::class.java]
     }
 }
