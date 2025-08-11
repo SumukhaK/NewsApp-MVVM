@@ -7,21 +7,20 @@ import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
-import com.ksa.newsapp_mvvm_architecture.NewsApplication
 import com.ksa.newsapp_mvvm_architecture.data.model.Country
 import com.ksa.newsapp_mvvm_architecture.databinding.ActivityCountryListBinding
-import com.ksa.newsapp_mvvm_architecture.di.component.DaggerActivityComponent
-import com.ksa.newsapp_mvvm_architecture.di.module.ActivityModule
 import com.ksa.newsapp_mvvm_architecture.ui.base.UiState
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class CountryListActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var countryListViewModel: CountryListViewModel
+    private lateinit var countryListViewModel: CountryListViewModel
 
     @Inject
     lateinit var countryListAdapter: CountryListAdapter
@@ -31,10 +30,10 @@ class CountryListActivity : AppCompatActivity() {
     private lateinit var retryBtn: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        injectDependencies()
         super.onCreate(savedInstanceState)
         countryListBinding = ActivityCountryListBinding.inflate(layoutInflater)
         setContentView(countryListBinding.root)
+        setupViewModel()
         setUpUi()
         setupObserver()
     }
@@ -87,10 +86,7 @@ class CountryListActivity : AppCompatActivity() {
         countryListAdapter.notifyDataSetChanged()
     }
 
-    private fun injectDependencies() {
-        DaggerActivityComponent.builder()
-            .applicationComponent((application as NewsApplication).applicationComponent)
-            .activityModule(ActivityModule(this))
-            .build().injectCountryList(this)
+    private fun setupViewModel() {
+        countryListViewModel = ViewModelProvider(this)[CountryListViewModel::class.java]
     }
 }

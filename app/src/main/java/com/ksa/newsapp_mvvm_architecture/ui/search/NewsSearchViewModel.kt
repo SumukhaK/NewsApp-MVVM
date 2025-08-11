@@ -8,6 +8,7 @@ import com.ksa.newsapp_mvvm_architecture.ui.base.UiState
 import com.ksa.newsapp_mvvm_architecture.utils.AppConstants.DEBOUNCE_TIMEOUT
 import com.ksa.newsapp_mvvm_architecture.utils.AppConstants.MINIMUM_CHARS_FOR_SEARCH
 import com.ksa.newsapp_mvvm_architecture.utils.DispatcherProvider
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.debounce
@@ -18,6 +19,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class NewsSearchViewModel @Inject constructor(private val newsSearchByKeywordRepository:
                                               NewsSearchByKeywordRepository,
                                               private val dispatcherProvider: DispatcherProvider) : ViewModel() {

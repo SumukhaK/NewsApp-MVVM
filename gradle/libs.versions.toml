@@ -3,7 +3,7 @@ agp = "8.5.0"
 coreTestingVersion = "2.1.0"
 glide = "4.13.1"
 kotlin = "1.9.0"
-dagger = "2.52"
+hilt = "2.48"
 coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -31,8 +31,8 @@ androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref =
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRuntime" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
-dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
-dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -52,4 +52,5 @@ turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 org-jetbrains-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "org-jetbrains-kotlin-android" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 

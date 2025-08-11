@@ -2,12 +2,10 @@ package com.ksa.newsapp_mvvm_architecture.di.module
 
 import android.content.Context
 import androidx.room.Room
-import com.ksa.newsapp_mvvm_architecture.NewsApplication
 import com.ksa.newsapp_mvvm_architecture.data.api.NetworkService
 import com.ksa.newsapp_mvvm_architecture.data.local.AppDatabase
 import com.ksa.newsapp_mvvm_architecture.data.local.AppDatabaseService
 import com.ksa.newsapp_mvvm_architecture.data.local.DatabaseService
-import com.ksa.newsapp_mvvm_architecture.di.ApplicationContext
 import com.ksa.newsapp_mvvm_architecture.di.BaseURL
 import com.ksa.newsapp_mvvm_architecture.di.DatabaseName
 import com.ksa.newsapp_mvvm_architecture.utils.DefaultDispatcherProvider
@@ -16,6 +14,9 @@ import com.ksa.newsapp_mvvm_architecture.utils.DispatcherProvider
 import com.ksa.newsapp_mvvm_architecture.utils.NetworkHelper
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -24,26 +25,20 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
-class ApplicationModule(private val application: NewsApplication) {
-
-    @ApplicationContext
-    @Provides
-    fun provideContext(): Context {
-        return application
-    }
+@InstallIn(SingletonComponent::class)
+class ApplicationModule {
 
     @BaseURL
     @Provides
-    fun provideBaseUrl():String = "https://newsapi.org/v2/"
+    fun provideBaseUrl(): String = "https://newsapi.org/v2/"
 
     @Provides
     @Singleton
-    fun provideGsonConverterFactory(): GsonConverterFactory
-            = GsonConverterFactory.create()
+    fun provideGsonConverterFactory(): GsonConverterFactory = GsonConverterFactory.create()
 
     @Provides
     @Singleton
-    fun getOkHttpBuilder():OkHttpClient{
+    fun getOkHttpBuilder(): OkHttpClient {
         val interceptor = HttpLoggingInterceptor()
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         val httpClient = OkHttpClient()
@@ -56,8 +51,10 @@ class ApplicationModule(private val application: NewsApplication) {
 
     @Provides
     @Singleton
-    fun provideNetworkService(@BaseURL baseURL: String,
-                              gsonConverterFactory: GsonConverterFactory) : NetworkService{
+    fun provideNetworkService(
+        @BaseURL baseURL: String,
+        gsonConverterFactory: GsonConverterFactory
+    ): NetworkService {
         return Retrofit.Builder()
             .baseUrl(baseURL)
             .addConverterFactory(gsonConverterFactory)

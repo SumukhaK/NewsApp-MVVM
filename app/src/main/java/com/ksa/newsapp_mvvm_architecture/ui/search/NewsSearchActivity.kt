@@ -9,36 +9,35 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ksa.newsapp_mvvm_architecture.NewsApplication
 import com.ksa.newsapp_mvvm_architecture.data.model.Article
 import com.ksa.newsapp_mvvm_architecture.databinding.ActivityNewsSearchBinding
-import com.ksa.newsapp_mvvm_architecture.di.component.DaggerActivityComponent
-import com.ksa.newsapp_mvvm_architecture.di.module.ActivityModule
 import com.ksa.newsapp_mvvm_architecture.ui.base.UiState
 import com.ksa.newsapp_mvvm_architecture.ui.topheadline.TopHeadlineAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class NewsSearchActivity : AppCompatActivity() {
 
     private lateinit var searchActivityNewsSearchBinding: ActivityNewsSearchBinding
+    private lateinit var searchViewModel: NewsSearchViewModel
 
-    @Inject
-    lateinit var searchViewModel: NewsSearchViewModel
     @Inject
     lateinit var adapter: TopHeadlineAdapter
     private lateinit var errorView: View
     private lateinit var retryBtn: Button
     private var submittedQuery = ""
     override fun onCreate(savedInstanceState: Bundle?) {
-        injectDependecncies()
         super.onCreate(savedInstanceState)
         searchActivityNewsSearchBinding = ActivityNewsSearchBinding.inflate(layoutInflater)
         setContentView(searchActivityNewsSearchBinding.root)
+        setupViewModel()
         setupUi()
         setupObsevers()
     }
@@ -53,10 +52,12 @@ class NewsSearchActivity : AppCompatActivity() {
                             renderList(it.data)
                             searchActivityNewsSearchBinding.recyclerView.visibility = View.VISIBLE
                         }
+
                         is UiState.Loading -> {
                             searchActivityNewsSearchBinding.progressBar.visibility = View.VISIBLE
                             searchActivityNewsSearchBinding.recyclerView.visibility = View.GONE
                         }
+
                         is UiState.Error -> {
                             searchActivityNewsSearchBinding.progressBar.visibility = View.GONE
                             searchActivityNewsSearchBinding.recyclerView.visibility = View.GONE
@@ -87,7 +88,8 @@ class NewsSearchActivity : AppCompatActivity() {
             searchViewModel.searchNews(submittedQuery)
         }
 
-        searchActivityNewsSearchBinding.searchview.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+        searchActivityNewsSearchBinding.searchview.setOnQueryTextListener(object :
+            SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (!query.isNullOrEmpty()) {
                     submittedQuery = query
@@ -106,21 +108,18 @@ class NewsSearchActivity : AppCompatActivity() {
         })
     }
 
-    companion object{
-        fun startNewsSourcesActivity(context: Context, bundleParam : String=""): Intent {
+    companion object {
+        fun startNewsSourcesActivity(context: Context, bundleParam: String = ""): Intent {
             return Intent(context, NewsSearchActivity::class.java)
         }
-    }
-
-    fun injectDependecncies(){
-        DaggerActivityComponent.builder()
-            .applicationComponent((application as NewsApplication).applicationComponent)
-            .activityModule(ActivityModule(this))
-            .build().injectSearchNews(this)
     }
 
     private fun renderList(articleList: List<Article>) {
         adapter.addData(articleList)
         adapter.notifyDataSetChanged()
+    }
+
+    private fun setupViewModel() {
+        searchViewModel = ViewModelProvider(this)[NewsSearchViewModel::class.java]
     }
 }
